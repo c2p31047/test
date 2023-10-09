@@ -17,6 +17,9 @@ const signupForm = document.getElementById('signup-form');
 const newUsernameField = document.getElementById('new-username');
 const newEmailField = document.getElementById('new-email');
 const newPasswordField = document.getElementById('new-password');
+const usernameField = document.getElementById('username');
+const emailField = document.getElementById('email');
+const password = document.getElementById('password');
 
 signupForm.addEventListener('submit', (e) => {
     e.preventDefault();

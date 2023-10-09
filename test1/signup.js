@@ -21,28 +21,21 @@ const newPasswordField = document.getElementById('new-password');
 signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const newUsername = newUsernameField.value;
-    const newEmail = newEmailField.value;
-    const newPassword = newPasswordField.value;
+    const username = usernameField.value;
+    const email = emailField.value;
+    const password = passwordField.value;
 
-    // Firebase Authenticationを使用して新規ユーザーを登録
-    firebase.auth().createUserWithEmailAndPassword(newEmail, newPassword)
+    // Firebase Authenticationを使用して新しいユーザーを作成
+    firebase.auth().createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
-            // ユーザー作成成功時の処理
-            const user = userCredential.user;
-            // ユーザー名を設定（任意）
-            user.updateProfile({
-                displayName: newUsername,
-            }).then(() => {
-                console.log('ユーザーが登録されました:', user);
-                alert('新しいユーザーが登録されました。');
-                window.location.href = 'index.html'; // 登録後のリダイレクト
-            }).catch((error) => {
-                console.error('ユーザー名の設定中にエラーが発生しました:', error);
-            });
+            // 新規登録成功時の処理
+            console.log('新しいユーザーが登録されました:', userCredential.user);
+            alert('新しいユーザーが登録されました！');
+            // ログインページにリダイレクトするか、任意のページにリダイレクトします。
+            // window.location.href = 'login.html';
         })
         .catch((error) => {
-            console.error('新規ユーザーの登録中にエラーが発生しました:', error);
-            alert('新規ユーザーの登録に失敗しました。');
+            console.error('新規登録エラー:', error);
+            alert('新規登録に失敗しました。');
         });
 });

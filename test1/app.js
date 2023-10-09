@@ -22,12 +22,13 @@ loginForm.addEventListener('submit', (e) => {
 
     const username = usernameField.value;
     const password = passwordField.value;
+    const redirectUrl = document.getElementById('redirect-url').value; // リダイレクト先のURL
 
     // Firebase Authenticationを使用してログイン
     firebase.auth().signInWithEmailAndPassword(username, password)
         .then((userCredential) => {
             // ログイン成功時の処理
-            window.location.href = 'home.html'; // ログイン後のリダイレクト
+            window.location.href = redirectUrl; // ログイン後のリダイレクト
         })
         .catch((error) => {
             console.error('ログインエラー:', error);

@@ -14,12 +14,10 @@ firebase.initializeApp(firebaseConfig);
 
 // 新規登録フォーム
 const signupForm = document.getElementById('signup-form');
-const newUsernameField = document.getElementById('new-username');
-const newEmailField = document.getElementById('new-email');
-const newPasswordField = document.getElementById('new-password');
 const usernameField = document.getElementById('username');
 const emailField = document.getElementById('email');
 const passwordField = document.getElementById('password');
+const googleSignupButton = document.getElementById('google-signup-button');
 
 signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -40,5 +38,26 @@ signupForm.addEventListener('submit', (e) => {
         .catch((error) => {
             console.error('新規登録エラー:', error);
             alert('新規登録に失敗しました。');
+        });
+});
+
+// Googleサインインボタンのクリックをリッスン
+googleSignupButton.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // Google認証プロバイダのインスタンスを作成
+    const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+
+    // Googleサインインを開始
+    firebase.auth().signInWithPopup(googleAuthProvider)
+        .then((userCredential) => {
+            // Googleサインイン成功時の処理
+            const user = userCredential.user;
+            // ログイン後のリダイレクトなどの処理を追加
+        })
+        .catch((error) => {
+            // Googleサインイン失敗時の処理
+            const errorMessage = error.message;
+            console.error('Googleサインインエラー:', errorMessage);
         });
 });

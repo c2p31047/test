@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>ログインページ</title>
+</head>
+<body>
+    <div class="container">
+        <div class="login-form">
+            <h1>ログイン</h1>
+            <form id="login-form">
+                <input type="text" id="username" placeholder="ユーザー名" required>
+                <input type="password" id="password" placeholder="パスワード" required>
+                <a href="#">パスワードを忘れた場合</a>
+                <button type="submit">ログイン</button>
+            </form>
+            <p>アカウントをお持ちでない方は <a href="signup.html">新規登録</a></p>
+            <div class="google-login">
+                <img src="google-logo.png" alt="Google ロゴ">
+                <button>Google アカウントでログイン</button>
+            </div>
+        </div>
+        <div class="menu">
+            <div class="hamburger">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <ul>
+                <li><a href="#">ホーム</a></li>
+                <li><a href="#">メニュー</a></li>
+                <li><a href="#">設定</a></li>
+                <li><a href="#">ログアウト</a></li>
+            </ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

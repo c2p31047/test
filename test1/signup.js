@@ -14,7 +14,6 @@ firebase.initializeApp(firebaseConfig);
 
 // 新規登録フォーム
 const signupForm = document.getElementById('signup-form');
-const usernameField = document.getElementById('username');
 const emailField = document.getElementById('email');
 const passwordField = document.getElementById('password');
 const googleSignupButton = document.getElementById('google-signup-button');
@@ -22,7 +21,6 @@ const googleSignupButton = document.getElementById('google-signup-button');
 signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const username = usernameField.value;
     const email = emailField.value;
     const password = passwordField.value;
 

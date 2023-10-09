@@ -27,7 +27,7 @@ loginForm.addEventListener('submit', (e) => {
     const password = passwordField.value;
 
     // Firebase Authenticationを使用してログイン
-    firebase.auth().signInWithEmailAndPassword(username, password)
+    firebase.auth().signInWithEmailAndPassword(email, password)
         .then((userCredential) => {
             // ログイン成功時の処理
             const user = userCredential.user;

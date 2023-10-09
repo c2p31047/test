@@ -18,7 +18,7 @@ const passwordResetForm = document.getElementById('password-reset-form');
 const emailField = document.getElementById('email');
 const passwordField = document.getElementById('password');
 const loginMessage = document.getElementById('login-message');
-const redirectUrl = document.getElementById('redirect-url').value;
+const redirectUrl = document.getElementById('redirect-url');
 const resetMessage = document.getElementById('reset-message');
 
 

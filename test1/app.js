@@ -16,10 +16,12 @@ firebase.initializeApp(firebaseConfig);
 const loginForm = document.getElementById('login-form');
 const usernameField = document.getElementById('username');
 const passwordField = document.getElementById('password');
+const loginMessage = document.getElementById('login-message');
 
+// ログインフォームの送信イベントを処理
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-
+    
     const username = usernameField.value;
     const password = passwordField.value;
     const redirectUrl = document.getElementById('redirect-url').value; // リダイレクト先のURL
@@ -28,9 +30,15 @@ loginForm.addEventListener('submit', (e) => {
     firebase.auth().signInWithEmailAndPassword(username, password)
         .then((userCredential) => {
             // ログイン成功時の処理
+            const user = userCredential.user;
+            loginMessage.textContent = 'ログインに成功しました。';
+            loginMessage.style.color = 'green';
             window.location.href = redirectUrl; // ログイン後のリダイレクト
         })
         .catch((error) => {
+            const errorMessage = error.message;
+            loginMessage.textContent = 'ログインに失敗しました: ' + errorMessage;
+            loginMessage.style.color = 'red';
             console.error('ログインエラー:', error);
             alert('ログインに失敗しました。');
         });

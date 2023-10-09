@@ -15,7 +15,6 @@ firebase.initializeApp(firebaseConfig);
 // ログインフォーム
 const loginForm = document.getElementById('login-form');
 const emailField = document.getElementById('email');
-const usernameField = document.getElementById('username');
 const passwordField = document.getElementById('password');
 const loginMessage = document.getElementById('login-message');
 const redirectUrl = document.getElementById('redirect-url').value; // リダイレクト先のURL
@@ -25,7 +24,6 @@ loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     const email = emailField.value;
-    const username = usernameField.value;
     const password = passwordField.value;
 
     // Firebase Authenticationを使用してログイン

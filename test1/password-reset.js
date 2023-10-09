@@ -19,17 +19,26 @@ const resetEmailField = document.getElementById('reset-email');
 passwordResetForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    const resetEmail = resetEmailField.value;
+    const email = emailField.value;
 
-    // パスワードリセットのリクエストを送信
-    firebase.auth().sendPasswordResetEmail(resetEmail)
+    // Firebase Authenticationを使用して、パスワードリセットメールを送信
+    firebase.auth().sendPasswordResetEmail(email)
         .then(() => {
-            // パスワードリセットのリクエストが成功した場合の処理
-            alert('パスワードリセットのリンクを送信しました。');
-            window.location.href = 'index.html'; // ログインページにリダイレクト
+            // パスワードリセットメールの送信に成功した場合の処理
+            resetMessage.textContent = 'パスワードリセットメールを送信しました。メールボックスを確認してください。';
+            resetMessage.style.color = 'green';
         })
         .catch((error) => {
-            console.error('パスワードリセットリクエストの送信中にエラーが発生しました:', error);
-            alert('パスワードリセットのリクエストの送信に失敗しました。');
+            // パスワードリセットメールの送信に失敗した場合の処理
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error('パスワードリセットエラー:', errorCode, errorMessage);
+
+            // エラーメッセージを表示
+            resetMessage.textContent = 'パスワードリセットメールの送信に失敗しました。';
+            resetMessage.style.color = 'red';
         });
+
+    // メール入力フィールドをクリア
+    emailField.value = '';
 });

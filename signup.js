@@ -1,16 +1,19 @@
-// 新しいユーザーを作成
+// ユーザーの登録
 firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((userCredential) => {
         const user = userCredential.user;
-        // ユーザーデータをデータベースに保存
-        database.ref('users/' + user.uid).set({
-            username: username,
-            email: email,
-            // 他のユーザーデータ
-        });
-        res.status(201).json({ message: 'ユーザーが登録されました' });
+        console.log('ユーザーが登録されました:', user);
     })
     .catch((error) => {
-        console.error('ユーザーの作成中にエラーが発生しました:', error);
-        res.status(500).json({ message: 'ユーザーの登録に失敗しました' });
+        console.error('ユーザーの登録中にエラーが発生しました:', error);
+    });
+
+// ユーザーのログイン
+firebase.auth().signInWithEmailAndPassword(email, password)
+    .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('ユーザーがログインしました:', user);
+    })
+    .catch((error) => {
+        console.error('ユーザーのログイン中にエラーが発生しました:', error);
     });

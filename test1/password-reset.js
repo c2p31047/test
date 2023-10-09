@@ -14,7 +14,7 @@ firebase.initializeApp(firebaseConfig);
 
 // パスワードリセットフォーム
 const passwordResetForm = document.getElementById('password-reset-form');
-const resetEmailField = document.getElementById('reset-email');
+const emailField = document.getElementById('email');
 
 passwordResetForm.addEventListener('submit', (e) => {
     e.preventDefault();

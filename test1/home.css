@@ -1,0 +1,63 @@
+/* home.css */
+/* ホームページ独自のスタイルを追加 */
+.header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-icon {
+    cursor: pointer;
+}
+
+.bar {
+    width: 30px;
+    height: 4px;
+    background-color: white;
+    margin: 6px 0;
+}
+
+.navbar {
+    display: none;
+}
+
+.navbar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+.navbar li {
+    margin-right: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #333;
+}
+
+.user-info {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    max-width: 300px;
+    width: 100%;
+}
+
+h1 {
+    margin-bottom: 20px;
+}
+
+footer {
+    text-align: center;
+    margin-top: 20px;
+    color: #888;
+}

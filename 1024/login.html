@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>タイトル</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>ホームページ（ロゴ）</h1>
+    </header>
+    
+    <div class="container">
+        <div class="login-form">
+            <div id="login-message"></div>
+            <h1>ログイン</h1>
+            <form id="login-form">
+                <input type="hidden" id="redirect-url" value="home.html">
+                <input type="email" id="email" placeholder="メールアドレス" required>
+                <input type="password" id="password" placeholder="パスワード" required>
+                <button type="submit">ログイン</button>
+            </form>
+            <div class="links">
+                <a href="password-reset.html">パスワードを忘れた場合</a>
+                <a href="signup.html">アカウントを作成</a>
+            </div>
+            <div class="google-login">
+                <button id="google-login">Google アカウントでログイン</button>
+            </div>
+        </div>
+    </div>
+    <footer>
+        &copy; 2023 CHANGENAME. All Rights Reserved.
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.9.0/firebase-firestore.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

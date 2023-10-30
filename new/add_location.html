@@ -1,0 +1,22 @@
+<!-- add_location.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ロケーションを追加</title>
+</head>
+<body>
+    <h1>ロケーションを追加</h1>
+    
+    <form id="add-location-form">
+        <label for="location-name">ロケーション名:</label>
+        <input type="text" id="location-name" required>
+        <label for="location-description">説明:</label>
+        <textarea id="location-description" required></textarea>
+        <button type="submit">追加</button>
+    </form>
+    
+    <script src="firebase.js"></script>
+    <script src="add_location.js"></script>
+</body>
+</html>

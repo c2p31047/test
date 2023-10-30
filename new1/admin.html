@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin ページ</title>
+</head>
+<body>
+    <h1>管理者ページ</h1>
+    <button id="logout-button">ログアウト</button>
+
+    <h2>データの管理</h2>
+    <form id="data-form">
+        <label for="key">キー:</label>
+        <input type="text" id="key" name="key">
+        <label for="value">値:</label>
+        <input type="text" id="value" name="value">
+        <button type="submit">データを追加</button>
+    </form>
+
+    <ul id="data-list">
+        <!-- データを表示するためのリスト -->
+    </ul>
+
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

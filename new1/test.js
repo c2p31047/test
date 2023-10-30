@@ -1,4 +1,16 @@
-// Firebase Realtime Databaseへの参照を取得
+// Firebaseの初期化
+var firebaseConfig = {
+  apiKey: "AIzaSyDTS7OuSwFOqUXNHgWLwKARmV3cOcLN-Ec",
+  authDomain: "projectc-01.firebaseapp.com",
+  databaseURL: "https://projectc-01-default-rtdb.firebaseio.com",
+  projectId: "projectc-01",
+  storageBucket: "projectc-01.appspot.com",
+  messagingSenderId: "282949999420",
+  appId: "1:282949999420:web:bdae3b7002d2c853571c39",
+  measurementId: "G-QDQJGHXYLP"
+};
+
+firebase.initializeApp(firebaseConfig);
 var database = firebase.database();
 
 // 予約ボタンがクリックされたときの処理

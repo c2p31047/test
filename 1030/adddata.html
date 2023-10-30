@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>データベース管理</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1>データベース管理</h1>
+    
+    <h2>ロケーションの編集/追加/削除</h2>
+    <form id="edit-add-delete-location-form">
+        <label for="locationSelect">選択したロケーション:</label>
+        <select id="locationSelect" onchange="loadLocationData()">
+            <!-- 現在登録されているロケーションを表示 -->
+        </select>
+        <label for="locationName">新しいロケーション名:</label>
+        <input type="text" id="locationName" name="locationName">
+        <button type="button" id="edit-button" onclick="editLocation()">編集</button>
+        <button type="button" id="delete-button" onclick="openConfirmationModal()">削除</button>
+        <button type="button" id="add-button" onclick="addLocation()">追加</button>
+    </form>
+    <div id="locationData">
+        <!-- ロケーションのデータを表示 -->
+    </div>
+
+    <!-- モーダル用の要素 -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <p>本当に削除しますか？</p>
+            <button type="button" onclick="deleteLocationConfirmed()">はい</button>
+            <button type="button" onclick="closeConfirmationModal()">キャンセル</button>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.3.2/firebase-database.js"></script>
+    <script src="database.js"></script>
+</body>
+</html>

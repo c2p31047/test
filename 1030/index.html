@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>予約システム</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+    <h1>予約システム</h1>
+    <form id="reservation-form">
+        <label for="place">場所:</label>
+        <select id="place" name="place">
+            <!-- Firebaseから動的にオプションを取得 -->
+        </select>
+        <br>
+        <label for="date">日付:</label>
+        <input type="date" id="date" name="date">
+        <br>
+        <button type="button" onclick="makeReservation()">予約</button>
+    </form>
+    <div id="reservation-list">
+        <!-- Firebaseから動的に予約データを表示 -->
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/9.3.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.3.2/firebase-database.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

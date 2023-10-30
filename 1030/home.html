@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>無線ルーター設定</title>
+    <style>
+        /* スタイルを設定するCSS */
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .card-container {
+            display: flex;
+            justify-content: space-between;
+            width: 600px;
+        }
+        .column {
+            flex: 1;
+        }
+        .card {
+            margin: 10px;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        .card h2 {
+            font-size: 20px;
+        }
+        .card p {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>無線ルーター設定</h1>
+
+    <div class="card-container">
+        <div class="column">
+            <!-- カード1: 無線LAN設定 -->
+            <div class="card" onclick="openWirelessSettings()">
+                <h2>無線LAN設定</h2>
+                <p>無線ネットワークの設定とセキュリティ</p>
+            </div>
+
+            <!-- カード2: ネットワーク設定 -->
+            <div class="card" onclick="openNetworkSettings()">
+                <h2>ネットワーク設定</h2>
+                <p>IPアドレスとルーティング設定</p>
+            </div>
+        </div>
+
+        <div class="column">
+            <!-- カード3: ゲストネットワーク -->
+            <div class="card" onclick="openGuestNetworkSettings()">
+                <h2>ゲストネットワーク</h2>
+                <p>ゲスト用ネットワークの設定</p>
+            </div>
+
+            <!-- カード4: セキュリティ設定 -->
+            <div class="card" onclick="openSecuritySettings()">
+                <h2>セキュリティ設定</h2>
+                <p>パスワードとファイアウォール設定</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openWirelessSettings() {
+            // 無線LAN設定画面へのリダイレクトなど
+        }
+
+        function openNetworkSettings() {
+            // ネットワーク設定画面へのリダイレクトなど
+        }
+
+        function openGuestNetworkSettings() {
+            // ゲストネットワーク設定画面へのリダイレクトなど
+        }
+
+        function openSecuritySettings() {
+            // セキュリティ設定画面へのリダイレクトなど
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!-- reservation.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>ロケーション予約</title>
+</head>
+<body>
+    <h1>ロケーション予約</h1>
+
+    <h2>利用可能なロケーション</h2>
+    <div id="locations-list">
+        <!-- ロケーションのリストがここに表示されます -->
+    </div>
+
+    <h2>予約フォーム</h2>
+    <form id="reservation-form">
+        <label for="location-select">ロケーションを選択:</label>
+        <select id="location-select" required></select>
+        <label for="reservation-time">予約日時:</label>
+        <input type="datetime-local" id="reservation-time" required>
+        <button type="submit">予約</button>
+    </form>
+    
+    <script src="firebase.js"></script>
+    <script src="data.js"></script>
+    <script src="reservation.js"></script>
+</body>
+</html>

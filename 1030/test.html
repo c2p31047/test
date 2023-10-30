@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>場所の追加</title>
+</head>
+<body>
+    <h1>新しい場所を追加</h1>
+    <form id="add-location-form">
+        <label for="location-name">場所の名前:</label>
+        <input type="text" id="location-name" required>
+        <label for="location-description">説明:</label>
+        <textarea id="location-description"></textarea>
+        <button type="submit">追加</button>
+    </form>
+</body>
+<script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.7.0/firebase-database.js"></script>
+<script>
+  // Firebaseの設定
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    databaseURL: "YOUR_DATABASE_URL",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  // Firebaseの初期化
+  firebase.initializeApp(firebaseConfig);
+  
+  // データベース参照
+  const database = firebase.database();
+
+  // フォーム送信時の処理
+  document.getElementById("add-location-form").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const locationName = document.getElementById("location-name").value;
+    const locationDescription = document.getElementById("location-description").value;
+
+    // データベースに場所を追加
+    const newLocationRef = database.ref("locations").push();
+    newLocationRef.set({
+      name: locationName,
+      description: locationDescription
+    });
+
+    // フォームをクリア
+    document.getElementById("location-name").value = "";
+    document.getElementById("location-description").value = "";
+  });
+</script>
+</html>

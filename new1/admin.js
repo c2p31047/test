@@ -1,5 +1,5 @@
 // Firebaseの初期化
-var firebaseConfig = {
+const firebaseConfig = {
   apiKey: "AIzaSyDTS7OuSwFOqUXNHgWLwKARmV3cOcLN-Ec",
   authDomain: "projectc-01.firebaseapp.com",
   databaseURL: "https://projectc-01-default-rtdb.firebaseio.com",
@@ -11,7 +11,7 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-var database = firebase.database();
+const database = firebase.database();
 
 // 管理者の認証状態を確認
 firebase.auth().onAuthStateChanged(function(user) {
@@ -35,18 +35,18 @@ document.getElementById('logout-button').addEventListener('click', function() {
 // データの追加
 document.getElementById('data-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    var key = document.getElementById('key').value;
-    var value = document.getElementById('value').value;
-    var dataRef = database.ref('data');
+    const key = document.getElementById('key').value;
+    const value = document.getElementById('value').value;
+    const dataRef = database.ref('data');
     dataRef.update({ [key]: value });
 });
 
 // データの表示
-var dataList = document.getElementById('data-list');
-var dataRef = database.ref('data');
+const dataList = document.getElementById('data-list');
+const dataRef = database.ref('data');
 dataRef.on('child_added', function(snapshot) {
-    var data = snapshot.val();
-    var li = document.createElement('li');
+    const data = snapshot.val();
+    const li = document.createElement('li');
     li.textContent = snapshot.key + ': ' + data;
     dataList.appendChild(li);
 });

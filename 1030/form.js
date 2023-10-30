@@ -1,6 +1,6 @@
 // form.js
-
-import { database } from './firebase.js';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 document.getElementById("add-location-form").addEventListener("submit", function (event) {
     event.preventDefault();

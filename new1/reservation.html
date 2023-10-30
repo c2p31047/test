@@ -20,32 +20,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-auth.js"></script>
-    <script>
-        // Firebaseの初期化
-        var firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            databaseURL: "YOUR_DATABASE_URL",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        var database = firebase.database();
-
-        // 予約フォームの送信時の処理
-        document.getElementById('reservation-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            var location = document.getElementById('location').value;
-            var datetime = document.getElementById('datetime').value;
-
-            // 予約のデータをFirebase Realtime Databaseに保存する処理を追加
-        });
-
-        // Firebase Realtime Databaseから場所のデータを取得し、選択肢を生成する処理を追加
-    </script>
+    <script src="test.js"></script>
 </body>
 </html>

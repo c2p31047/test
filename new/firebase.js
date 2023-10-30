@@ -1,4 +1,7 @@
 // firebase.js
+import firebase from 'firebase/app';
+import 'firebase/database';
+import 'firebase/auth'; // auth モジュールを追加
 
 // Firebaseの設定
 const firebaseConfig = {
@@ -16,5 +19,6 @@ firebase.initializeApp(firebaseConfig);
 
 // データベース参照
 const database = firebase.database();
+const auth = firebase.auth(); // auth モジュールをエクスポート
 
-export { database };
+export { database, auth }; // database と auth をエクスポート

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>場所の追加</title>
+</head>
+<body>
+    <h1>場所を追加</h1>
+    <form id="add-location-form">
+        <label for="location-name">場所の名前:</label>
+        <input type="text" id="location-name" required>
+
+        <label for="location-description">場所の説明:</label>
+        <textarea id="location-description" required></textarea>
+
+        <button type="submit">場所を追加</button>
+    </form>
+
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.2/firebase-database.js"></script>
+    <script>
+        // Firebaseの設定
+        var firebaseConfig = {
+              apiKey: "AIzaSyDTS7OuSwFOqUXNHgWLwKARmV3cOcLN-Ec",
+              authDomain: "projectc-01.firebaseapp.com",
+              databaseURL: "https://projectc-01-default-rtdb.firebaseio.com",
+              projectId: "projectc-01",
+              storageBucket: "projectc-01.appspot.com",
+              messagingSenderId: "282949999420",
+              appId: "1:282949999420:web:bdae3b7002d2c853571c39",
+              measurementId: "G-QDQJGHXYLP"
+        };
+        // Firebaseの初期化
+        firebase.initializeApp(firebaseConfig);
+        var database = firebase.database();
+
+        document.getElementById("add-location-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const locationName = document.getElementById("location-name").value;
+            const locationDescription = document.getElementById("location-description").value;
+
+            // Firebase Realtime Databaseに新しい場所を追加
+            const newLocationRef = database.ref("locations").push();
+            newLocationRef.set({
+                name: locationName,
+                description: locationDescription
+            });
+
+            // フォームをクリア
+            document.getElementById("location-name").value = "";
+            document.getElementById("location-description").value = "";
+        });
+    </script>
+</body>
+</html>

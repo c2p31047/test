@@ -52,33 +52,13 @@ googleLoginButton.addEventListener('click', () => {
     const provider = new firebase.auth.GoogleAuthProvider();
 
     // Googleアカウントでログイン
-function signIn() {
-  firebase.auth().signInWithPopup(provider)
-  .then(result => {
-      console.log('ログインしました。');
-
-  }).catch(error => {
-        const signinError = `
-        サインインエラー
-        エラーメッセージ： ${error.message}
-        エラーコード: ${error.code}
-        `
-  　　　console.log(signinError);
-  });
-  }
-
-  function signOut() {
-  firebase.auth().onAuthStateChanged(user => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        console.log('ログアウトしました');
-        location.reload();
-      })
-      .catch((error) => {
-        console.log(`ログアウト時にエラーが発生しました (${error})`);
-      });
-  });
-  }
-
+    firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+            // ログイン成功時の処理
+            window.location.href = 'home.html'; // ログイン後のリダイレクト
+        })
+        .catch((error) => {
+            console.error('Googleログインエラー:', error);
+            alert('Googleログインに失敗しました。');
+        });
+});

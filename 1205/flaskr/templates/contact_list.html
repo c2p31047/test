@@ -1,0 +1,163 @@
+<!-- view_contact.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>コンタクト</h1>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <ul class="list-group">
+    {% for conversation in conversations %}
+      <li class="list-group-item" id="conversation-{{ conversation.id }}" oncontextmenu="showContextMenu(event, '{{ conversation.id }}')">
+        {% if conversation.user1 == current_user %}
+          {% set other_user = conversation.user2 %}
+        {% else %}
+          {% set other_user = conversation.user1 %}
+        {% endif %}
+        <a href="{{ url_for('view_contact', other_user_id=other_user.id) }}">
+          {{ other_user.username }} とのトーク
+        </a>
+        <!-- 追加: 右クリックメニュー表示用のクラス追加 -->
+        <span class="delete-conversation" data-conversation-id="{{ conversation.id }}">削除</span>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <!-- 新しい会話を開始するボタンを追加 -->
+  <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#startConversationModal">
+      新しい会話を開始する
+  </button>
+
+  <!-- モーダル -->
+  <div class="modal fade" id="startConversationModal" tabindex="-1" aria-labelledby="startConversationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="startConversationModalLabel">新しい会話を開始する</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="閉じる"></button>
+        </div>
+        <div class="modal-body">
+          <!-- ユーザーリストを表示する場所を作成 -->
+          <ul id="userList" class="list-group">
+            <!-- ユーザーリストはここに追加される -->
+          </ul>
+
+          <!-- 会話開始フォームはここに配置 -->
+          <form id="startConversationForm" method="POST" action="{{ url_for('start_new_conversation', other_user_id=selected_user.id if selected_user else 0) }}">
+            {{ form.csrf_token }}
+            <!-- ... フォームの内容 ... -->
+            <div class="mb-3">
+                <label for="selectedUser" class="form-label">ユーザー選択</label>
+                <select id="selectedUser" name="selectedUser" class="form-select" required>
+                    <!-- 選択されたユーザーはここに追加される -->
+                </select>
+            </div>
+            <button type="submit" class="btn btn-dark">会話を始める</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 右クリックメニュー表示用の関数
+    function showContextMenu(event, conversationId) {
+      event.preventDefault();
+      // 右クリックされた会話に対応する削除ボタンを表示
+      $(`#conversation-${conversationId} .delete-conversation`).css({
+        display: 'block',
+        top: `${event.clientY}px`,
+        left: `${event.clientX}px`
+      });
+    }
+
+    // 会話を削除する関数
+    $('.delete-conversation').click(function() {
+      var conversationId = $(this).data('conversation-id');
+      deleteConversation(conversationId);
+    });
+
+    function deleteConversation(conversationId) {
+      // Ajaxリクエストでサーバーサイドに削除リクエストを送信
+      $.ajax({
+        type: 'POST',
+        url: '/delete_conversation/' + conversationId,
+        success: function (response) {
+          // 削除が成功した場合の処理
+          console.log('Conversation with ID ' + conversationId + ' deleted.');
+          // 画面上からも削除
+          $('#conversation-' + conversationId).remove();
+        },
+        error: function (error) {
+          console.error('Error deleting conversation:', error);
+        }
+      });
+    }
+  
+
+    // 新しい会話を開始するボタンがクリックされたときの処理
+    $('#startConversationModal').on('show.bs.modal', function (event) {
+        // エンドポイントを呼び出して同じドメインのユーザーを取得
+        $.ajax({
+            type: 'POST',
+            url: '/get_same_domain_users',
+            success: function (response) {
+                // 取得したユーザーリストをモーダル内に表示
+                var userList = $('#userList');
+                var selectedUserDropdown = $('#selectedUser');
+                userList.empty();
+                selectedUserDropdown.empty();
+                response.same_domain_users.forEach(function (user) {
+                    userList.append('<li class="list-group-item">' + user.username + '</li>');
+                    selectedUserDropdown.append('<option value="' + user.id + '">' + user.username + '</option>');
+                });
+
+              // ユーザーが選択されたときにフォームのactionを更新
+              selectedUserDropdown.change(function () {
+                  var selectedUserId = $(this).val();
+                  var startConversationForm = $('#startConversationForm');
+                  // Update the action attribute with the selected user's ID
+                  startConversationForm.attr('action', '/start_new_conversation/' + selectedUserId);
+              });
+            },
+            error: function (error) {
+                console.error('Error fetching same domain users:', error);
+            }
+        });
+    });
+    
+      // 新しい会話を開始するボタンがクリックされたときの処理
+    $('#startConversationButton').click(function () {
+    // 選択されたユーザーのIDを取得
+    var selectedUserId = $('#selectedUser').val();
+
+    // サーバーに対して新しいトークを開始するリクエストを送信
+    $.ajax({
+      type: 'POST',
+      url: '/start_new_conversation',
+      data: { selectedUserId: selectedUserId },
+      success: function (response) {
+        // 新しいトークが作成されたら、適切なリダイレクトを行う
+        if (response.success) {
+          // 例: 新しいトークのビューにリダイレクト
+          window.location.href = '/view_conversation/' + response.conversationId;
+        } else {
+          console.error('Error starting conversation:', response.message);
+        }
+      },
+      error: function (error) {
+        console.error('Error starting conversation:', error);
+      }
+    });
+  });
+  </script>
+{% endblock %}

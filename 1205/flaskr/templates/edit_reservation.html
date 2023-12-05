@@ -1,0 +1,97 @@
+<!-- edit_reservation.html -->
+{% extends 'base.html' %}
+
+{% block title %}予約の編集{% endblock %}
+
+{% block content %}
+    <h1>予約の編集 - {{ location.location_name }}</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <div id="calendar" data-location-id="{{ location.id }}"></div>
+    <form method="POST" action="{{ url_for('edit_reservation', location_name=location.location_name, reservation_id=reservation.id) }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            <label for="title">タイトル:</label>
+            {{ form.title(class="form-control", size=32) }}
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                {{ form.start_date.label(class="form-label") }}
+                {{ form.start_date(class="form-control", id="start_date_picker", autocomplete="off") }}
+                {{ form.start_time.label(class="form-label") }}
+                {{ form.start_time(class="form-control", id="start_time_picker", disabled="disabled" if form.is_all_day.data)  }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.end_date.label(class="form-label") }}
+                {{ form.end_date(class="form-control", id="end_date_picker", autocomplete="off") }}
+                {{ form.end_time.label(class="form-label") }}
+                {{ form.end_time(class="form-control", id="end_time_picker", disabled="disabled" if form.is_all_day.data) }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ form.is_all_day(class="form-check-input", id="is_all_day_checkbox") }}
+                {{ form.is_all_day.label(class="form-check-label", for="is_all_day_checkbox") }}
+            </div>
+            <div class="form-group">
+                <input type="submit" name="submit" value="予約する" class="btn btn-dark btn-block">
+                <a href="{{ url_for('show_locations') }}" class="btn btn-secondary btn-block">戻る</a>
+            </div>
+        </div>
+    </form>
+
+    <br>
+    <a href="{{ url_for('index') }}">ホームに戻る</a>
+
+    <!-- FlatpickrのCDNを追加 -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- Flatpickrの初期化 -->
+    <script>
+        flatpickr("#start_date", {
+            enableTime: false,
+            dateFormat: "Y-m-d",
+        });
+
+        flatpickr("#start_time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+        });
+
+        flatpickr("#end_date", {
+            enableTime: false,
+            dateFormat: "Y-m-d",
+        });
+
+        flatpickr("#end_time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var isAllDayCheckbox = document.getElementById('is_all_day_checkbox');
+            var startTimeInput = document.getElementById('start_time_picker');
+            var endTimeInput = document.getElementById('end_time_picker');
+
+            isAllDayCheckbox.addEventListener('change', function() {
+                if (isAllDayCheckbox.checked) {
+                    startTimeInput.disabled = true;
+                    endTimeInput.disabled = true;
+                } else {
+                    startTimeInput.disabled = false;
+                    endTimeInput.disabled = false;
+                }
+            });
+        });
+    </script>
+</script>
+{% endblock %}

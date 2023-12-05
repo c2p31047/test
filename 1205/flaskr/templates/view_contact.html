@@ -1,0 +1,157 @@
+<!-- view_contact.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  /* トーク画面の範囲指定 */
+  #message-container {
+      height: 500px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+  }
+
+  /* メッセージコンテナの共通スタイル */
+  .message-container {
+      position: relative;
+      margin-bottom: 10px;
+  }
+
+  /* メッセージボックスの共通スタイル */
+  .message-box {
+      display: inline-block;
+      padding: 5px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+  }
+
+  /* メッセージのスタイル */
+  .message {
+      background-color: #e6f7ff; /* あなたのメッセージの背景色 */
+  }
+
+  /* 時間表示ボックスのスタイル */
+  .message-time-box {
+      font-size: 0.8em;
+      color: #666;
+      position: absolute;
+      bottom: 0px; /* 調整が必要かもしれません */
+  }
+
+  /* 右側にメッセージを送信した場合の時間表示スタイル */
+  .message-container[style*="text-align: right"] .message-time-box {
+      right: 0;
+  }
+
+  /* 左側にメッセージを送信した場合の時間表示スタイル */
+  .message-container[style*="text-align: left"] .message-time-box {
+      left: 0;
+  }
+
+  /* メッセージ上の右クリックメニュー */
+  .right-click-menu {
+      display: none;
+      position: absolute;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 5px;
+      border-radius: 5px;
+      z-index: 1;
+  }
+
+  /* 送信ボタンスタイル */
+  #send-message-btn {
+      display: block;
+      margin-top: 10px;
+  }
+</style>
+
+
+  <h2>ユーザー: {{ conversation.other_user(current_user.id).username }} とのトーク</h2>
+  
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- トーク画面の範囲 -->
+  <div id="message-container">
+    {% for message in conversation.messages %}
+        <div class="message-container" style="text-align: {% if message.sender_id == current_user.id %}right{% else %}left{% endif %};">
+            <div class="message-box" style="background-color: {% if message.sender_id == current_user.id %}#e6f7ff{% else %}#f0f0f0{% endif %};">
+                {% if message.sender_id == current_user.id %}
+                    <strong>あなた:</strong> {{ message.content }}
+                {% else %}
+                    <strong>{{ conversation.other_user(current_user.id).username }}:</strong> {{ message.content }}
+                {% endif %}
+            </div>
+            <div class="message-time-box">
+                <span class="message-time">{{ message.timestamp.strftime('%Y-%m-%d %H:%M') }}</span>
+            </div>
+            <!-- 右クリックメニュー -->
+            <div class="right-click-menu" style="top: -20px; {% if message.sender_id == current_user.id %}right: 0{% else %}left: 0{% endif %};">
+                <a href="#" class="delete-message" data-message-id="{{ message.id }}">削除</a>
+                <!-- <a href="#" class="reply-message" data-message-id="{{ message.id }}">リプライ</a> -->
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+  <!-- メッセージ入力フォーム -->
+  <form method="POST" action="{{ url_for('send_message', other_user_id=conversation.other_user(current_user.id).id) }}">
+    <label for="message_content">新しいメッセージ:</label>
+    <input type="text" name="message_content" required>
+    <button type="submit" id="send-message-btn">送信</button>
+  </form>
+  
+  <a href="{{ url_for('contact') }}">連絡先リストに戻る</a>
+
+  <script>
+    // JavaScriptで右クリックメニューを表示する処理
+    document.getElementById('message-container').addEventListener('contextmenu', function(event) {
+      event.preventDefault();
+      const messageContainer = event.target.closest('.message-container');
+      if (messageContainer) {
+        // 他のメッセージのメニューを非表示にする
+        document.querySelectorAll('.right-click-menu').forEach(function(m) {
+          m.style.display = 'none';
+        });
+
+        // メッセージの上部にのみメニューを表示
+        const menu = messageContainer.querySelector('.right-click-menu');
+        if (menu) {
+          menu.style.display = 'block';
+        }
+      }
+    });
+
+    // メニュー項目をクリックした際の処理
+    document.body.addEventListener('click', function(event) {
+      const deleteLink = event.target.closest('.delete-message');
+      // const replyLink = event.target.closest('.reply-message');
+      if (deleteLink) {
+        // メッセージ削除の処理
+        const messageId = deleteLink.dataset.messageId;
+        // Ajaxリクエストでメッセージを削除
+        fetch(`/delete_message/${messageId}`, { method: 'POST' })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              // 削除成功の場合、ページを再読み込み
+              location.reload();
+            } else {
+              console.error(data.message);
+            }
+          })
+          .catch(error => console.error('Error:', error));
+      }
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Location{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>教室の追加</h1>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form method="POST" action="{{ url_for('add_location') }}">
+            {{ form.hidden_tag() }}
+            <div class="mb-3">
+                <label for="location_name" class="form-label">{{ form.location_name.label }}</label>
+                {{ form.location_name(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                <label for="floor" class="form-label">{{ form.floor.label }}</label>
+                {{ form.floor(class="form-control") }}
+            </div>
+            <div class="mb-3">
+                <input type="submit" value="教室の追加" class="btn btn-dark">
+            </div>
+        </form>
+    </div>
+{% endblock %}

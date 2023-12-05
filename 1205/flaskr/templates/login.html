@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card custom-card">
+        <div class="card-header bg-dark text-white"> <!-- 背景色をdarkに変更 -->
+            <h1 class="text-center">ログイン</h1>
+        </div>
+        <div class="card-body">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <!-- ログインフォーム -->
+            <form method="POST" action="{{ url_for('login') }}">
+                {{ form.hidden_tag() }}
+                {{ form.csrf_token }}
+                <div class="mb-3">
+                    <label for="email" class="form-label">メールアドレス:</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">パスワード:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-dark">ログイン</button>
+                </div>
+            </form>
+
+            <!-- 新規登録サイトへのアクセスボタン -->
+            <form method="GET" action="{{ url_for('register') }}">
+                <div class="text-center mt-3">
+                    <button class="btn btn-secondary" type="submit">新規登録サイトへアクセス</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

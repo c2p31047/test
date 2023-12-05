@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    <!-- <h1>Home</h1> -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        {% for button in buttons %}
+            {% if button.show_for_admin and current_user.is_admin %}
+                <div class="col-md-4 mb-4">
+                    <a href="{{ button.url }}" class="card btn btn-dark">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ button.label }}</h5>
+                            <p class="card-text">{{ button.descripttion }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% elif not button.show_for_admin %}
+                <div class="col-md-4 mb-4">
+                    <a href="{{ button.url }}" class="card btn btn-dark">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ button.label }}</h5>
+                            <p class="card-text">{{ button.descripttion }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+{% endblock %}
